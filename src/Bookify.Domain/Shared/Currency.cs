@@ -1,4 +1,4 @@
-﻿namespace Bookify.Domain.Appartments;
+﻿namespace Bookify.Domain.Shared;
 
 public record Currency
 {
@@ -16,9 +16,9 @@ public record Currency
             throw new ApplicationException("The currency code is invalid.");
     }
 
-    public static readonly IReadOnlyCollection<Currency> All = new[] 
-    { 
-        Usd, 
-        Eur 
+    public static readonly IReadOnlyCollection<Currency> All = new[]
+    {
+        Usd,
+        Eur
     };
 }
