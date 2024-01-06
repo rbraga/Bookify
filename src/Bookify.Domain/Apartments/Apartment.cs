@@ -2,9 +2,9 @@
 
 namespace Bookify.Domain.Appartments;
 
-public class Appartment : Entity
+public class Apartment : Entity
 {
-    public Appartment(
+    public Apartment(
         Guid id,
         Name name,
         Description description,

@@ -27,7 +27,6 @@ public sealed class User : Entity
 
         user.RaiseDomainEvent(new UserCreatedDomainEvent(user.Id));
 
-        return user;            
+        return user;
     }
-
 }
