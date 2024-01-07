@@ -77,13 +77,43 @@ public sealed class Booking : Entity
     {
         if (Status != BookingStatus.Reserved)
         {
-            return Result.Failure(BookingErrors.NotPending);
+            return Result.Failure(BookingErrors.NotReserved);
         }
 
         Status = BookingStatus.Confirmed;
         ConfirmedOnUtc = utcNow;
 
         RaiseDomainEvent(new BookingConfirmedDomainEvent(Id));
+
+        return Result.Success();        
+    }
+
+    public Result Reject(DateTime utcNow)
+    {
+        if (Status != BookingStatus.Reserved)
+        {
+            return Result.Failure(BookingErrors.NotReserved);
+        }
+
+        Status = BookingStatus.Rejected;
+        RejectedOnUtc = utcNow;
+
+        RaiseDomainEvent(new BookingRejectedDomainEvent(Id));
+
+        return Result.Success();        
+    }
+
+    public Result Complete(DateTime utcNow)
+    {
+        if (Status != BookingStatus.Confirmed)
+        {
+            return Result.Failure(BookingErrors.NotConfirmed);
+        }
+
+        Status = BookingStatus.Completed;
+        CompletedOnUtc = utcNow;
+
+        RaiseDomainEvent(new BookingCompletedDomainEvent(Id));
 
         return Result.Success();        
     }
