@@ -1,4 +1,4 @@
-﻿using Bookify.Domain.Booking;
+﻿using Bookify.Domain.Bookings;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Bookify.Application;
