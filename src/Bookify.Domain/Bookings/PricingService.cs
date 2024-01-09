@@ -1,8 +1,8 @@
-﻿using Bookify.Domain.Appartments;
+﻿using Bookify.Domain.Apartments;
 using Bookify.Domain.Shared;
 using System.ComponentModel.DataAnnotations;
 
-namespace Bookify.Domain.Booking;
+namespace Bookify.Domain.Bookings;
 
 public class PricingService
 {
@@ -11,7 +11,7 @@ public class PricingService
         var currency = apartment.Price.Currency;
 
         var priceForPeriod = new Money(
-            apartment.Price.Amount * period.LengthInDays, 
+            apartment.Price.Amount * period.LengthInDays,
             currency);
 
         decimal percentageUpCharge = 0;

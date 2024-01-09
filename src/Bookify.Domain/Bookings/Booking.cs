@@ -1,9 +1,9 @@
 ﻿using Bookify.Domain.Abstractions;
-using Bookify.Domain.Appartments;
+using Bookify.Domain.Apartments;
 using Bookify.Domain.Booking.Events;
 using Bookify.Domain.Shared;
 
-namespace Bookify.Domain.Booking;
+namespace Bookify.Domain.Bookings;
 
 public sealed class Booking : Entity
 {
@@ -85,7 +85,7 @@ public sealed class Booking : Entity
 
         RaiseDomainEvent(new BookingConfirmedDomainEvent(Id));
 
-        return Result.Success();        
+        return Result.Success();
     }
 
     public Result Reject(DateTime utcNow)
@@ -100,7 +100,7 @@ public sealed class Booking : Entity
 
         RaiseDomainEvent(new BookingRejectedDomainEvent(Id));
 
-        return Result.Success();        
+        return Result.Success();
     }
 
     public Result Complete(DateTime utcNow)
@@ -115,6 +115,6 @@ public sealed class Booking : Entity
 
         RaiseDomainEvent(new BookingCompletedDomainEvent(Id));
 
-        return Result.Success();        
+        return Result.Success();
     }
 }

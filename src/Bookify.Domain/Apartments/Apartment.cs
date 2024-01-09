@@ -1,7 +1,7 @@
 ﻿using Bookify.Domain.Abstractions;
 using Bookify.Domain.Shared;
 
-namespace Bookify.Domain.Appartments;
+namespace Bookify.Domain.Apartments;
 
 public class Apartment : Entity
 {
@@ -14,13 +14,13 @@ public class Apartment : Entity
         Money cleaningFee,
         List<Amenity> amenities
         ) : base(id)
-    {            
+    {
         Name = name;
         Description = description;
         Address = address;
         Price = price;
         CleaningFee = cleaningFee;
-        Amenities = amenities; 
+        Amenities = amenities;
     }
 
     public Guid Id { get; private set; }

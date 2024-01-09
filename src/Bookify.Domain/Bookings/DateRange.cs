@@ -1,4 +1,4 @@
-﻿namespace Bookify.Domain.Booking;
+﻿namespace Bookify.Domain.Bookings;
 
 public record DateRange
 {
@@ -22,5 +22,5 @@ public record DateRange
             Start = start,
             End = end
         };
-    }        
+    }
 }
