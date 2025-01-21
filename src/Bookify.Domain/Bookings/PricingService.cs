@@ -1,6 +1,5 @@
 ﻿using Bookify.Domain.Apartments;
 using Bookify.Domain.Shared;
-using System.ComponentModel.DataAnnotations;
 
 namespace Bookify.Domain.Bookings;
 
@@ -15,7 +14,6 @@ public class PricingService
             currency);
 
         decimal percentageUpCharge = 0;
-
         foreach (var amenity in apartment.Amenities)
         {
             percentageUpCharge += amenity switch
@@ -35,7 +33,7 @@ public class PricingService
                 currency);
         }
 
-        var totalPrice = Money.Zero();
+        var totalPrice = Money.Zero(currency);
 
         totalPrice += priceForPeriod;
 

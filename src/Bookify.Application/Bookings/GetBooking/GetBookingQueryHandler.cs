@@ -5,7 +5,7 @@ using Dapper;
 
 namespace Bookify.Application.Bookings.GetBooking;
 
-internal sealed class GetBookingQueryHandler : IQueryHandle<GetBookingQuery, BookingResponse>
+internal sealed class GetBookingQueryHandler : IQueryHandler<GetBookingQuery, BookingResponse>
 {
     private readonly ISqlConnectionFactory _sqlConnectionFactory;
 
@@ -18,13 +18,13 @@ internal sealed class GetBookingQueryHandler : IQueryHandle<GetBookingQuery, Boo
     {
         using var connection = _sqlConnectionFactory.CreateConnection();
 
-        var sql = """
+        const string sql = """
             SELECT
                 id AS Id,
                 apartment_id AS ApartmentId,
                 user_id AS UserId,
                 status AS Status,
-                price_for_period_amount AS PriceAmount ,
+                price_for_period_amount AS PriceAmount,
                 price_for_period_currency AS PriceCurrency,
                 cleaning_fee_amount AS CleaningFeeAmount,
                 cleaning_fee_currency AS CleaningFeeCurrency,

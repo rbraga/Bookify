@@ -13,18 +13,20 @@ internal sealed class BookingRepository : Repository<Booking>, IBookingRepositor
         BookingStatus.Completed
     };
 
-    public BookingRepository(ApplicationDbContext dbContext) : base(dbContext)
+    public BookingRepository(ApplicationDbContext dbContext)
+        : base(dbContext)
     {
     }
 
     public async Task<bool> IsOverlappingAsync(
         Apartment apartment,
         DateRange duration,
-        CancellationToken cancellationToken = default) 
+        CancellationToken cancellationToken = default)
     {
         return await DbContext
             .Set<Booking>()
-            .AnyAsync(booking =>
+            .AnyAsync(
+                booking =>
                     booking.ApartmentId == apartment.Id &&
                     booking.Duration.Start <= duration.End &&
                     booking.Duration.End >= duration.Start &&
@@ -32,4 +34,3 @@ internal sealed class BookingRepository : Repository<Booking>, IBookingRepositor
                 cancellationToken);
     }
 }
-

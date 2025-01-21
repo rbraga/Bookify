@@ -41,7 +41,7 @@ internal sealed class ReserveBookingCommandHandler : ICommandHandler<ReserveBook
         {
             return Result.Failure<Guid>(UserErrors.NotFound);
         }
-        
+
         var apartment = await _apartmentRepository.GetByIdAsync(request.ApartmentId, cancellationToken);
 
         if (apartment is null)
@@ -75,6 +75,5 @@ internal sealed class ReserveBookingCommandHandler : ICommandHandler<ReserveBook
         {
             return Result.Failure<Guid>(BookingErrors.Overlap);
         }
-        
     }
 }

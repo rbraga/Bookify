@@ -27,4 +27,3 @@ internal abstract class Repository<T>
         DbContext.Add(entity);
     }
 }
-

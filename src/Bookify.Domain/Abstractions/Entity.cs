@@ -24,5 +24,5 @@ public abstract class Entity
     protected void RaiseDomainEvent(IDomainEvent domainEvent)
     {
         _domainEvents.Add(domainEvent);
-    } 
-};
+    }
+}

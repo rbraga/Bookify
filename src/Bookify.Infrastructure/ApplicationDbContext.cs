@@ -9,7 +9,7 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork
 {
     private readonly IPublisher _publisher;
 
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IPublisher publisher)
+    public ApplicationDbContext(DbContextOptions options, IPublisher publisher)
         : base(options)
     {
         _publisher = publisher;
@@ -28,7 +28,7 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork
         {
             var result = await base.SaveChangesAsync(cancellationToken);
 
-            await PublishDomainEventsEvents();
+            await PublishDomainEventsAsync();
 
             return result;
         }
@@ -38,11 +38,11 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork
         }
     }
 
-    private async Task PublishDomainEventsEvents()
+    private async Task PublishDomainEventsAsync()
     {
-        var domainEntities = ChangeTracker
+        var domainEvents = ChangeTracker
             .Entries<Entity>()
-            .Select(x => x.Entity)
+            .Select(entry => entry.Entity)
             .SelectMany(entity =>
             {
                 var domainEvents = entity.GetDomainEvents();
@@ -53,7 +53,7 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork
             })
             .ToList();
 
-        foreach (var domainEvent in domainEntities)
+        foreach (var domainEvent in domainEvents)
         {
             await _publisher.Publish(domainEvent);
         }

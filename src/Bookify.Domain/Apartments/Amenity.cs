@@ -12,4 +12,4 @@ public enum Amenity
     Terrace = 8,
     MountainView = 9,
     GardenView = 10
-};
+}

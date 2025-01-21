@@ -1,10 +1,9 @@
-﻿namespace Bookify.Application.Exceptions
+﻿namespace Bookify.Application.Exceptions;
+
+public sealed class ConcurrencyException : Exception
 {
-    public sealed class ConcurrencyException: Exception
+    public ConcurrencyException(string message, Exception innerException)
+        : base(message, innerException)
     {
-        public ConcurrencyException(string message, Exception innerException)
-            : base(message, innerException)
-        {
-        }
     }
 }
