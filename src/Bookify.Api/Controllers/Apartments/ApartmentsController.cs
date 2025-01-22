@@ -28,4 +28,3 @@ public class ApartmentsController : ControllerBase
         return Ok(result.Value);
     }
 }
-

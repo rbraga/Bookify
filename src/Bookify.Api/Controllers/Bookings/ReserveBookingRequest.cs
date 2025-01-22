@@ -5,4 +5,3 @@ public sealed record ReserveBookingRequest(
     Guid UserId,
     DateOnly StartDate,
     DateOnly EndDate);
-

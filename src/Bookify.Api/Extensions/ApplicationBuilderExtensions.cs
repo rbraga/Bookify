@@ -1,5 +1,4 @@
-﻿using System.Net.NetworkInformation;
-using Bookify.Api.Middleware;
+﻿using Bookify.Api.Middleware;
 using Bookify.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,9 +10,9 @@ public static class ApplicationBuilderExtensions
     {
         using var scope = app.ApplicationServices.CreateScope();
 
-        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-        context.Database.Migrate();
+        dbContext.Database.Migrate();
     }
 
     public static void UseCustomExceptionHandler(this IApplicationBuilder app)

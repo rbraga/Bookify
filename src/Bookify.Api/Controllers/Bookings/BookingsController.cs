@@ -16,19 +16,19 @@ public class BookingsController : ControllerBase
         _sender = sender;
     }
 
-    [HttpGet]
+    [HttpGet("{id}")]
     public async Task<IActionResult> GetBooking(Guid id, CancellationToken cancellationToken)
     {
         var query = new GetBookingQuery(id);
 
         var result = await _sender.Send(query, cancellationToken);
-        
-        return result.IsSuccess ? Ok(result.Value) : NotFound();    
+
+        return result.IsSuccess ? Ok(result.Value) : NotFound();
     }
 
     [HttpPost]
     public async Task<IActionResult> ReserveBooking(
-        ReserveBookingRequest request, 
+        ReserveBookingRequest request,
         CancellationToken cancellationToken)
     {
         var command = new ReserveBookingCommand(
@@ -47,4 +47,3 @@ public class BookingsController : ControllerBase
         return CreatedAtAction(nameof(GetBooking), new { id = result.Value }, result.Value);
     }
 }
-
