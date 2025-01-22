@@ -34,7 +34,7 @@ internal sealed class SearchAparmentsQueryHandler
 
         const string sql = """
             SELECT
-                a.id AS ld,
+                a.id AS Id,
                 a.name AS Name,
                 a.description AS Description,
                 a.price_amount AS Price,
