@@ -10,4 +10,3 @@ public sealed class AuthenticationOptions
 
     public string Issuer { get; set; } = string.Empty;
 }
-

@@ -37,35 +37,6 @@ public static class DependencyInjection
         return services;
     }
 
-    private static void AddAuthentication(IServiceCollection services, IConfiguration configuration)
-    {
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer();
-
-        services.Configure<AuthenticationOptions>(configuration.GetSection("Authentication"));
-
-        services.ConfigureOptions<JwtBearerOptionsSetup>();
-
-        services.Configure<KeycloakOptions>(configuration.GetSection("Keycloak"));
-
-        services.AddTransient<AdminAuthorizationDelegatingHandler>();
-
-        services.AddHttpClient<IAuthenticationService, AuthenticationService>((serviceProvider, httpClient) =>
-            {
-                var keycloakOption = serviceProvider.GetRequiredService<IOptions<KeycloakOptions>>().Value;
-
-                httpClient.BaseAddress = new Uri(keycloakOption.AdminUrl);
-            })
-            .AddHttpMessageHandler<AdminAuthorizationDelegatingHandler>();
-
-        services.AddHttpClient<IJwtService, JwtService>((serviceProvider, httpClient) =>
-        {
-            var keycloakOption = serviceProvider.GetRequiredService<IOptions<KeycloakOptions>>().Value;
-
-            httpClient.BaseAddress = new Uri(keycloakOption.TokenUrl);
-        });
-    }
-
     private static void AddPersistence(IServiceCollection services, IConfiguration configuration)
     {
         var connectionString =
@@ -89,5 +60,35 @@ public static class DependencyInjection
             new SqlConnectionFactory(connectionString));
 
         SqlMapper.AddTypeHandler(new DateOnlyTypeHandler());
+    }
+
+    private static void AddAuthentication(IServiceCollection services, IConfiguration configuration)
+    {
+        services
+            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer();
+
+        services.Configure<AuthenticationOptions>(configuration.GetSection("Authentication"));
+
+        services.ConfigureOptions<JwtBearerOptionsSetup>();
+
+        services.Configure<KeycloakOptions>(configuration.GetSection("Keycloak"));
+
+        services.AddTransient<AdminAuthorizationDelegatingHandler>();
+
+        services.AddHttpClient<IAuthenticationService, AuthenticationService>((serviceProvider, httpClient) =>
+            {
+                var keycloakOptions = serviceProvider.GetRequiredService<IOptions<KeycloakOptions>>().Value;
+
+                httpClient.BaseAddress = new Uri(keycloakOptions.AdminUrl);
+            })
+            .AddHttpMessageHandler<AdminAuthorizationDelegatingHandler>();
+
+        services.AddHttpClient<IJwtService, JwtService>((serviceProvider, httpClient) =>
+        {
+            var keycloakOptions = serviceProvider.GetRequiredService<IOptions<KeycloakOptions>>().Value;
+
+            httpClient.BaseAddress = new Uri(keycloakOptions.TokenUrl);
+        });
     }
 }

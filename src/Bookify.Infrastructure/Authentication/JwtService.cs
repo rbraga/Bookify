@@ -1,8 +1,8 @@
-﻿using Bookify.Application.Abstractions.Authentication;
+﻿using System.Net.Http.Json;
+using Bookify.Application.Abstractions.Authentication;
 using Bookify.Domain.Abstractions;
 using Bookify.Infrastructure.Authentication.Models;
 using Microsoft.Extensions.Options;
-using System.Net.Http.Json;
 
 namespace Bookify.Infrastructure.Authentication;
 
@@ -15,9 +15,7 @@ internal sealed class JwtService : IJwtService
     private readonly HttpClient _httpClient;
     private readonly KeycloakOptions _keycloakOptions;
 
-    public JwtService(
-        HttpClient httpClient,
-        IOptions<KeycloakOptions> keycloakOptions)
+    public JwtService(HttpClient httpClient, IOptions<KeycloakOptions> keycloakOptions)
     {
         _httpClient = httpClient;
         _keycloakOptions = keycloakOptions.Value;
@@ -35,6 +33,7 @@ internal sealed class JwtService : IJwtService
                 new("client_id", _keycloakOptions.AuthClientId),
                 new("client_secret", _keycloakOptions.AuthClientSecret),
                 new("scope", "openid email"),
+                new("grant_type", "password"),
                 new("username", email),
                 new("password", password)
             };
@@ -59,5 +58,4 @@ internal sealed class JwtService : IJwtService
             return Result.Failure<string>(AuthenticationFailed);
         }
     }
-
 }

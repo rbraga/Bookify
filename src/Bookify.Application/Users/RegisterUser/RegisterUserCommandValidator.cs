@@ -1,11 +1,12 @@
 ﻿using FluentValidation;
 
 namespace Bookify.Application.Users.RegisterUser;
+
 internal sealed class RegisterUserCommandValidator : AbstractValidator<RegisterUserCommand>
 {
     public RegisterUserCommandValidator()
     {
-        RuleFor(x => x.FirstName).NotEmpty();
+        RuleFor(c => c.FirstName).NotEmpty();
 
         RuleFor(c => c.LastName).NotEmpty();
 
