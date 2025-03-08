@@ -2,8 +2,9 @@
 
 namespace Bookify.Infrastructure.Authorization;
 
-public sealed class UserRolesResponse
+public class UserRolesResponse
 {
-    public Guid Id { get; init; }
+    public Guid UserId { get; init; }
+
     public List<Role> Roles { get; init; } = [];
 }

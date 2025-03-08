@@ -12,9 +12,7 @@ internal sealed class GetBookingQueryHandler : IQueryHandler<GetBookingQuery, Bo
     private readonly ISqlConnectionFactory _sqlConnectionFactory;
     private readonly IUserContext _userContext;
 
-    public GetBookingQueryHandler(
-        ISqlConnectionFactory sqlConnectionFactory,
-        IUserContext userContext)
+    public GetBookingQueryHandler(ISqlConnectionFactory sqlConnectionFactory, IUserContext userContext)
     {
         _sqlConnectionFactory = sqlConnectionFactory;
         _userContext = userContext;

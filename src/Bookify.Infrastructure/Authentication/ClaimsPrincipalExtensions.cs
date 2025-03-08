@@ -1,5 +1,5 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
+﻿using System.Security.Claims;
+using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace Bookify.Infrastructure.Authentication;
 
@@ -9,10 +9,11 @@ internal static class ClaimsPrincipalExtensions
     {
         var userId = principal?.FindFirstValue(JwtRegisteredClaimNames.Sub);
 
-        return Guid.TryParse(userId, out Guid parsedUserId) ?
-                parsedUserId :
-               throw new ApplicationException("User identifier is unavailable");
+        return Guid.TryParse(userId, out var parsedUserId) ?
+            parsedUserId :
+            throw new ApplicationException("User identifier is unavailable");
     }
+
     public static string GetIdentityId(this ClaimsPrincipal? principal)
     {
         return principal?.FindFirstValue(ClaimTypes.NameIdentifier) ??

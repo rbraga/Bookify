@@ -1,13 +1,12 @@
-﻿using System.Security.Claims;
-using Bookify.Infrastructure.Authentication;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.DependencyInjection;
+using System.Security.Claims;
+using Bookify.Infrastructure.Authentication;
 using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace Bookify.Infrastructure.Authorization;
 
-public class CustomClaimsTransformation : IClaimsTransformation
+internal sealed class CustomClaimsTransformation : IClaimsTransformation
 {
     private readonly IServiceProvider _serviceProvider;
 
@@ -18,7 +17,8 @@ public class CustomClaimsTransformation : IClaimsTransformation
 
     public async Task<ClaimsPrincipal> TransformAsync(ClaimsPrincipal principal)
     {
-        if (principal.HasClaim(claim => claim.Type == ClaimTypes.Role) &&
+        if (principal.Identity is not { IsAuthenticated: true } ||
+            principal.HasClaim(claim => claim.Type == ClaimTypes.Role) &&
             principal.HasClaim(claim => claim.Type == JwtRegisteredClaimNames.Sub))
         {
             return principal;
@@ -34,7 +34,7 @@ public class CustomClaimsTransformation : IClaimsTransformation
 
         var claimsIdentity = new ClaimsIdentity();
 
-        claimsIdentity.AddClaim(new Claim(JwtRegisteredClaimNames.Sub, userRoles.Id.ToString()));
+        claimsIdentity.AddClaim(new Claim(JwtRegisteredClaimNames.Sub, userRoles.UserId.ToString()));
 
         foreach (var role in userRoles.Roles)
         {

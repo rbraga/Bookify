@@ -1,6 +1,6 @@
 ﻿namespace Bookify.Domain.Users;
 
-public class RolePermission
+public sealed class RolePermission
 {
     public int RoleId { get; set; }
 

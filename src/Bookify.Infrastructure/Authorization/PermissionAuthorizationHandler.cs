@@ -14,7 +14,7 @@ internal sealed class PermissionAuthorizationHandler : AuthorizationHandler<Perm
     }
 
     protected override async Task HandleRequirementAsync(
-        AuthorizationHandlerContext context, 
+        AuthorizationHandlerContext context,
         PermissionRequirement requirement)
     {
         if (context.User.Identity is not { IsAuthenticated: true })
@@ -28,12 +28,11 @@ internal sealed class PermissionAuthorizationHandler : AuthorizationHandler<Perm
 
         var identityId = context.User.GetIdentityId();
 
-        HashSet<string> permissions = await authorizationService.GetPermissionsForUserAsync(identityId);
+        var permissions = await authorizationService.GetPermissionsForUserAsync(identityId);
 
         if (permissions.Contains(requirement.Permission))
         {
             context.Succeed(requirement);
         }
-
     }
 }

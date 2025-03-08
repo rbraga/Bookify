@@ -7,7 +7,8 @@ internal sealed class PermissionAuthorizationPolicyProvider : DefaultAuthorizati
 {
     private readonly AuthorizationOptions _authorizationOptions;
 
-    public PermissionAuthorizationPolicyProvider(IOptions<AuthorizationOptions> options) : base(options)
+    public PermissionAuthorizationPolicyProvider(IOptions<AuthorizationOptions> options)
+        : base(options)
     {
         _authorizationOptions = options.Value;
     }

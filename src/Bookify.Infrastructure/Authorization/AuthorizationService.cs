@@ -15,11 +15,11 @@ internal sealed class AuthorizationService
     public async Task<UserRolesResponse> GetRolesForUserAsync(string identityId)
     {
         var roles = await _dbContext.Set<User>()
-            .Where(user => user.IdentityId == identityId)
-            .Select(user => new UserRolesResponse
+            .Where(u => u.IdentityId == identityId)
+            .Select(u => new UserRolesResponse
             {
-                Id = user.Id,
-                Roles = user.Roles.ToList()
+                UserId = u.Id,
+                Roles = u.Roles.ToList()
             })
             .FirstAsync();
 
@@ -29,12 +29,10 @@ internal sealed class AuthorizationService
     public async Task<HashSet<string>> GetPermissionsForUserAsync(string identityId)
     {
         var permissions = await _dbContext.Set<User>()
-            .Where(user => user.IdentityId == identityId)
-            .SelectMany(user => user.Roles.Select(role => role.Permissions))
+            .Where(u => u.IdentityId == identityId)
+            .SelectMany(u => u.Roles.Select(r => r.Permissions))
             .FirstAsync();
 
-        var permissionsSet = permissions.Select(p => p.Name).ToHashSet();
-
-        return permissionsSet;
+        return permissions.Select(p => p.Name).ToHashSet();
     }
 }
