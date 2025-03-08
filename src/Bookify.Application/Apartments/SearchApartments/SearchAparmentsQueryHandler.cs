@@ -8,7 +8,7 @@ using Dapper;
 namespace Bookify.Application.Apartments.SearchApartments;
 
 internal sealed class SearchAparmentsQueryHandler 
-    : IQueryHandle<SearchApartmentsQuery, IReadOnlyList<ApartmentResponse>>
+    : IQueryHandler<SearchApartmentsQuery, IReadOnlyList<ApartmentResponse>>
 {
     private static readonly int[] ActiveBookingStatuses = new[]
     {
