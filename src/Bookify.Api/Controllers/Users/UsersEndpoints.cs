@@ -64,9 +64,8 @@ public static class UsersEndpoints
         var result = await sender.Send(command, cancellationToken);
 
         if (result.IsFailure)
-        {
-            //return Results.Unauthorized(result.Error);
-            return Results.BadRequest(result.Error);
+        {            
+            return Results.Unauthorized();
         }
 
         return Results.Ok(result.Value);

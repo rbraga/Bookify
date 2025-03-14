@@ -1,4 +1,6 @@
 ﻿using Bookify.Application.Abstractions.Behaviors;
+using Bookify.Application.Bookings.ReserveBooking;
+using Bookify.Application.Users.RegisterUser;
 using Bookify.Domain.Bookings;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,7 +22,10 @@ public static class DependencyInjection
             configuration.AddOpenBehavior(typeof(QueryCachingBehavior<,>));
         });
 
-        services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
+        
+        //services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
+        services.AddScoped<IValidator<RegisterUserCommand>, RegisterUserCommandValidator>();
+        services.AddScoped<IValidator<ReserveBookingCommand>, ReserveBookingCommandValidator>();
 
         services.AddTransient<PricingService>();
 

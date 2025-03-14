@@ -14,10 +14,8 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Host.UseSerilog((context, configuration) => 
+builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
-
-builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -62,8 +60,6 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.MapControllers();
-
 ApiVersionSet apiVersionSet = app.NewApiVersionSet()
     .HasApiVersion(new ApiVersion(1))
     .ReportApiVersions()
@@ -82,6 +78,5 @@ app.MapHealthChecks("health", new HealthCheckOptions
 });
 
 app.Run();
-
 
 public partial class Program;

@@ -122,6 +122,8 @@ public static class DependencyInjection
 
     private static void AddAuthorization(IServiceCollection services)
     {
+        services.AddAuthorization();
+
         services.AddScoped<AuthorizationService>();
 
         services.AddTransient<IClaimsTransformation, CustomClaimsTransformation>();
